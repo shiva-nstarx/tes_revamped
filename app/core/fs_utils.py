@@ -1,11 +1,13 @@
 import json
 import os
-import logging
 from datetime import datetime
+
+from app.core.config import log_level
+from app.core.logging import setup_logger
 from app.core.constants import STATE_PATH
 from app.models import ZonePartner
 
-logger = logging.getLogger(__name__)
+logger = setup_logger(__name__, log_level)
 
 
 def save_zone_partner_payload(zone_partner):

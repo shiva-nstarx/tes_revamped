@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks
 from app.models import DeployMLWorkbench
-from app.services import deploy_ml_workbench_service
+from app.svc import deploy_ml_workbench_service
 
 router = APIRouter()
 

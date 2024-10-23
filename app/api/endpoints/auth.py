@@ -3,11 +3,12 @@ from app.core.logging import setup_logger
 from fastapi import APIRouter, HTTPException
 from app.schemas.auth import AWSCredentialsPayload, AWSCredentialsResponse
 from app.schemas.common import ErrorResponse
-from app.services import set_aws_credentials_service
+from app.services.aws_auth_service import AWSCredentialsService
 
 logger = setup_logger(__name__, log_level)
 
 router = APIRouter()
+aws_service = AWSCredentialsService()
 
 
 @router.post("/set_aws_credentials",
@@ -18,12 +19,15 @@ router = APIRouter()
                  403: {"model": ErrorResponse, "description": "Forbidden"},
                  500: {"model": ErrorResponse, "description": "Internal server error"}
              })
-async def set_aws_credentials(credentials: AWSCredentialsPayload):
-    try:
-        result = await set_aws_credentials_service(credentials)
-        return result
-    except ValueError as e:
-        raise HTTPException(status_code=403, detail=str(e))
-    except Exception as e:
-        logger.error(f"Error setting AWS credentials: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+async def set_aws_credentials(credentials: AWSCredentialsPayload) -> AWSCredentialsResponse:
+    """
+        Set AWS credentials in environment variables
+
+        Parameters:
+            credentials (AWSCredentials): AWS credentials to set
+
+        Returns:
+            AWSCredentialsResponse: Success message
+        """
+    message = aws_service.set_credentials(credentials)
+    return AWSCredentialsResponse(message=message)

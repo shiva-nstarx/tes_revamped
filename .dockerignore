@@ -1,0 +1,9 @@
+custom-docker-images/
+status/
+venv/
+zone_partner_*.json
+config_*
+terraform_*/
+__pycache__/
+terraform/.terraform/
+.git/

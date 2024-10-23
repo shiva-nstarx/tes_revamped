@@ -1,0 +1,12 @@
+uvicorn[standard]
+python-multipart
+fastapi
+kubernetes
+joblib
+boto3
+python-jenkins
+pydantic[email]
+pyjwt
+requests
+cryptography
+python-json-logger
